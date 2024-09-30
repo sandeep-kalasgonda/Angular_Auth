@@ -1,0 +1,193 @@
+<h2 mat-dialog-title>Create an Account</h2>
+
+<mat-dialog-content>
+  <mat-stepper orientation="horizontal" linear>
+    <!-- Step 1: Personal Details -->
+    <mat-step [stepControl]="basicDetailsForm">
+      <form [formGroup]="basicDetailsForm" class="form-container">
+        <ng-template matStepLabel>Personal Details</ng-template>
+
+        <div class="two-column-form">
+          <mat-form-field>
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" />
+            <mat-error
+              *ngIf="basicDetailsForm.get('firstName')?.hasError('required')"
+            >
+              First Name is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" />
+            <mat-error
+              *ngIf="basicDetailsForm.get('lastName')?.hasError('required')"
+            >
+              Last Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" />
+          <mat-error
+            *ngIf="basicDetailsForm.get('email')?.hasError('required')"
+          >
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="basicDetailsForm.get('email')?.hasError('email')">
+            Enter a valid email address
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Mobile</mat-label>
+          <input matInput formControlName="mobile" />
+          <mat-error
+            *ngIf="basicDetailsForm.get('mobile')?.hasError('required')"
+          >
+            Mobile number is required
+          </mat-error>
+          <mat-error
+            *ngIf="basicDetailsForm.get('mobile')?.hasError('pattern')"
+          >
+            Enter a valid 10-digit mobile number
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" />
+          <mat-error
+            *ngIf="basicDetailsForm.get('password')?.hasError('required')"
+          >
+            Password is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" formControlName="confirmPassword" />
+          <mat-error
+            *ngIf="
+              basicDetailsForm.get('confirmPassword')?.hasError('required')
+            "
+          >
+            Confirm Password is required
+          </mat-error>
+          <mat-error *ngIf="passwordMismatch">
+            Passwords do not match
+          </mat-error>
+        </mat-form-field>
+
+        <div class="button-container">
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Step 2: Organization Details -->
+    <mat-step [stepControl]="organizationDetailsForm">
+      <form [formGroup]="organizationDetailsForm" class="form-container">
+        <ng-template matStepLabel>Organization Details</ng-template>
+
+        <mat-form-field>
+          <mat-label>Organization Name</mat-label>
+          <input matInput formControlName="organizationName" />
+          <mat-error
+            *ngIf="
+              organizationDetailsForm
+                .get('organizationName')
+                ?.hasError('required')
+            "
+          >
+            Organization Name is required
+          </mat-error>
+        </mat-form-field>
+
+        <div class="button-container">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Step 3: Address Details -->
+    <mat-step [stepControl]="addressDetailsForm">
+      <form [formGroup]="addressDetailsForm" class="form-container">
+        <ng-template matStepLabel>Address Details</ng-template>
+
+        <mat-form-field *ngIf="countries.length > 0">
+          <mat-label>Country</mat-label>
+          <mat-select
+            formControlName="country"
+            (selectionChange)="onCountryChange($event.value)"
+          >
+            <mat-option *ngFor="let country of countries" [value]="country.id">
+              {{ country.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="states.length > 0">
+          <mat-label>State</mat-label>
+          <mat-select
+            formControlName="state"
+            (selectionChange)="onStateChange($event.value)"
+          >
+            <mat-option *ngFor="let state of states" [value]="state.id">
+              {{ state.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="cities.length > 0">
+          <mat-label>City</mat-label>
+          <mat-select formControlName="city">
+            <mat-option *ngFor="let city of cities" [value]="city.id">
+              {{ city.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Pincode</mat-label>
+          <input matInput formControlName="pincode" />
+          <mat-error
+            *ngIf="addressDetailsForm.get('pincode')?.hasError('required')"
+          >
+            Pincode is required
+          </mat-error>
+          <mat-error
+            *ngIf="addressDetailsForm.get('pincode')?.hasError('pattern')"
+          >
+            Enter a valid 6-digit pincode
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <input matInput formControlName="address" />
+          <mat-error
+            *ngIf="addressDetailsForm.get('address')?.hasError('required')"
+          >
+            Address is required
+          </mat-error>
+        </mat-form-field>
+
+        <div class="button-container">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button color="primary" (click)="onRegister()">
+            Register
+          </button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+</mat-dialog-actions>

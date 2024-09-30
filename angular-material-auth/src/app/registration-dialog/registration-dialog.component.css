@@ -1,0 +1,32 @@
+/* Ensure the form takes up the full height of the dialog */
+form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Container for form fields */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Two-column layout */
+.two-column-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* Ensure form fields take up the available space */
+mat-form-field {
+  width: 100%;
+}
+
+/* Adjust button placement */
+.button-container {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+}

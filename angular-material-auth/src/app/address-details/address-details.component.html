@@ -1,0 +1,159 @@
+<form #addressForm="ngForm" (ngSubmit)="submitForm(addressForm)">
+  <mat-card>
+    <mat-card-content>
+      <!-- Country -->
+      <div class="form-group">
+        <mat-form-field appearance="fill">
+          <mat-label>Country</mat-label>
+          <mat-select
+            [(ngModel)]="country"
+            name="country"
+            (selectionChange)="onCountryChange($event)"
+            required
+            #countryField="ngModel"
+          >
+            <mat-option *ngFor="let country of countries" [value]="country">
+              {{ country }}
+            </mat-option>
+          </mat-select>
+          <div
+            *ngIf="
+              countryField.invalid &&
+              (countryField.dirty || countryField.touched)
+            "
+            class="error"
+          >
+            Country is required.
+          </div>
+        </mat-form-field>
+      </div>
+
+      <!-- State -->
+      <div class="form-group">
+        <mat-form-field appearance="fill">
+          <mat-label>State</mat-label>
+          <mat-select
+            [(ngModel)]="state"
+            name="state"
+            (selectionChange)="onStateChange($event)"
+            required
+            #stateField="ngModel"
+          >
+            <mat-option
+              *ngFor="let state of selectedStates"
+              [value]="state.code"
+            >
+              {{ state.name }}
+            </mat-option>
+          </mat-select>
+          <div
+            *ngIf="
+              stateField.invalid && (stateField.dirty || stateField.touched)
+            "
+            class="error"
+          >
+            State is required.
+          </div>
+        </mat-form-field>
+      </div>
+
+      <!-- City -->
+      <div class="form-group">
+        <mat-form-field appearance="fill">
+          <mat-label>City</mat-label>
+          <mat-select
+            [(ngModel)]="city"
+            name="city"
+            required
+            #cityField="ngModel"
+          >
+            <mat-option *ngFor="let city of selectedCities" [value]="city.code">
+              {{ city.name }}
+            </mat-option>
+          </mat-select>
+          <div
+            *ngIf="cityField.invalid && (cityField.dirty || cityField.touched)"
+            class="error"
+          >
+            City is required.
+          </div>
+        </mat-form-field>
+      </div>
+
+      <!-- Pincode -->
+      <div class="form-group">
+        <mat-form-field appearance="fill">
+          <mat-label>Pincode</mat-label>
+          <input
+            matInput
+            placeholder="Pincode"
+            [(ngModel)]="pincode"
+            name="pincode"
+            required
+            minlength="6"
+            maxlength="6"
+            #pincodeField="ngModel"
+          />
+          <div
+            *ngIf="
+              pincodeField.invalid &&
+              (pincodeField.dirty || pincodeField.touched)
+            "
+            class="error"
+          >
+            <div *ngIf="pincodeField.errors?.['required']">
+              Pincode is required.
+            </div>
+            <div
+              *ngIf="
+                pincodeField.errors?.['minlength'] || pincodeField.errors?.['maxlength']
+              "
+            >
+              Pincode must be 6 digits.
+            </div>
+          </div>
+        </mat-form-field>
+      </div>
+
+      <!-- Address -->
+      <div class="form-group">
+        <mat-form-field appearance="fill">
+          <mat-label>Address</mat-label>
+          <textarea
+            matInput
+            placeholder="Address"
+            [(ngModel)]="address"
+            name="address"
+            required
+            minlength="10"
+            #addressField="ngModel"
+          ></textarea>
+          <div
+            *ngIf="
+              addressField.invalid &&
+              (addressField.dirty || addressField.touched)
+            "
+            class="error"
+          >
+            <div *ngIf="addressField.errors?.['required']">
+              Address is required.
+            </div>
+            <div *ngIf="addressField.errors?.['minlength']">
+              Address must be at least 10 characters long.
+            </div>
+          </div>
+        </mat-form-field>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!addressForm.form.valid"
+        type="submit"
+      >
+        Submit
+      </button>
+    </mat-card-content>
+  </mat-card>
+</form>

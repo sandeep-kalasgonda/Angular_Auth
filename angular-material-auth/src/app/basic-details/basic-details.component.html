@@ -1,0 +1,129 @@
+<mat-card>
+  <mat-grid-list cols="2" rowHeight="auto" gutterSize="16px">
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input
+          matInput
+          name="firstName"
+          [(ngModel)]="firstName"
+          required
+          #firstName="ngModel"
+        />
+        <mat-error
+          *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+        >
+          First name is required.
+        </mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input
+          matInput
+          name="lastName"
+          [(ngModel)]="lastName"
+          required
+          #lastName="ngModel"
+        />
+        <mat-error
+          *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+        >
+          Last name is required.
+        </mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          required
+          #email="ngModel"
+          [ngClass]="{ invalid: !isValidEmail(email.value) }"
+        />
+        <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">
+          <div *ngIf="email.errors?.['required']">Email is required.</div>
+          <div *ngIf="!isValidEmail(email.value)">
+            Enter a valid email address.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Mobile</mat-label>
+        <input
+          matInput
+          type="tel"
+          name="mobile"
+          [(ngModel)]="mobile"
+          required
+          #mobile="ngModel"
+          [ngClass]="{ invalid: !isValidMobile(mobile.value) }"
+        />
+        <mat-error *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)">
+          <div *ngIf="mobile.errors?.['required']">
+            Mobile number is required.
+          </div>
+          <div *ngIf="!isValidMobile(mobile.value)">
+            Enter a valid mobile number.
+          </div>
+        </mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+          #password="ngModel"
+        />
+        <mat-error
+          *ngIf="password.invalid && (password.dirty || password.touched)"
+        >
+          Password is required.
+        </mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Confirm Password</mat-label>
+        <input
+          matInput
+          type="password"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          required
+          #confirmPassword="ngModel"
+        />
+        <mat-error
+          *ngIf="
+            confirmPassword.invalid &&
+            (confirmPassword.dirty || confirmPassword.touched)
+          "
+        >
+          Confirm password is required.
+        </mat-error>
+        <mat-error
+          *ngIf="password !== confirmPassword && confirmPassword.touched"
+        >
+          Passwords do not match.
+        </mat-error>
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-card>

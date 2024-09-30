@@ -1,0 +1,6 @@
+.dialog-title {
+  color: #fff; /* White text color for better contrast */
+  background: linear-gradient(45deg, #ff4081, #e040fb); /* Pink to Purple gradient */
+  padding: 16px;
+  border-radius: 4px;
+}
